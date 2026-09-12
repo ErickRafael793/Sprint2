@@ -1,0 +1,451 @@
+:host {
+  display: block;
+}
+
+
+.users-page {
+  min-height: 100vh;
+
+  padding:
+    24px
+    18px
+    105px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8efe5 0%,
+      #faf8f4 45%,
+      #edf3f5 100%
+    );
+}
+
+
+.users-container {
+  width: 100%;
+  max-width: 560px;
+
+  min-height:
+    calc(100vh - 48px);
+
+  margin: 0 auto;
+
+  padding: 22px;
+
+  border-radius: 28px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 15px 45px
+    rgba(54, 54, 54, 0.08);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.top-bar {
+  display: grid;
+
+  grid-template-columns:
+    42px
+    1fr
+    auto;
+
+  align-items: center;
+
+  min-height: 45px;
+}
+
+
+.back-button {
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #30343b;
+
+  font-size: 31px;
+
+  cursor: pointer;
+}
+
+
+.header-title {
+  font-size: 16px;
+
+  font-weight: 700;
+}
+
+
+.role-badge {
+  padding:
+    7px
+    11px;
+
+  border-radius: 999px;
+
+  background: #dde9ee;
+
+  color: #53656d;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.07em;
+}
+
+
+/* =========================
+   TITULO
+========================= */
+
+.directory-heading {
+  margin:
+    42px
+    0
+    26px;
+}
+
+
+.section-label {
+  color: #a56f6b;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.11em;
+}
+
+
+.directory-heading h1 {
+  margin:
+    6px
+    0;
+
+  color: #30343b;
+
+  font-size: 28px;
+}
+
+
+.directory-heading p {
+  margin: 0;
+
+  color: #87898d;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   USUARIOS
+========================= */
+
+.users-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 13px;
+}
+
+
+.user-card {
+  display: grid;
+
+  grid-template-columns:
+    54px
+    1fr
+    auto;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding:
+    15px
+    14px;
+
+  border:
+    1px solid
+    #ece9e4;
+
+  border-radius: 17px;
+
+  background: #ffffff;
+}
+
+
+.avatar {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+
+  border-radius: 17px;
+
+  background: #dde8df;
+
+  color: #587060;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+}
+
+
+.user-info {
+  min-width: 0;
+}
+
+
+.user-info h2 {
+  margin: 0;
+
+  color: #30343b;
+
+  font-size: 15px;
+}
+
+
+.username {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a56f6b;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+.contact-info {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  margin-top: 7px;
+
+  color: #85878b;
+
+  font-size: 11px;
+}
+
+
+.separator {
+  color: #c5c5c5;
+}
+
+
+.read-only {
+  padding:
+    6px
+    8px;
+
+  border-radius: 8px;
+
+  background: #f3f0eb;
+
+  color: #85817c;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading-state,
+.error-state {
+  display: flex;
+
+  min-height: 600px;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 25px;
+
+  text-align: center;
+}
+
+
+.loader {
+  width: 40px;
+  height: 40px;
+
+  margin-bottom: 17px;
+
+  border:
+    4px solid
+    #eeeeee;
+
+  border-top-color:
+    #d98f89;
+
+  border-radius: 50%;
+
+  animation:
+    spin
+    0.8s linear infinite;
+}
+
+
+.loading-state p {
+  color: #777b80;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error-icon {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 68px;
+  height: 68px;
+
+  margin-bottom: 20px;
+
+  border-radius: 22px;
+
+  background: #f3e8d2;
+
+  color: #9d815b;
+
+  font-size: 28px;
+
+  font-weight: 800;
+}
+
+
+.error-state h1 {
+  margin: 0;
+
+  color: #30343b;
+
+  font-size: 22px;
+}
+
+
+.error-state p {
+  max-width: 260px;
+
+  margin:
+    10px
+    0
+    23px;
+
+  color: #85878b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+.retry-button {
+  min-width: 140px;
+
+  height: 46px;
+
+  padding:
+    0
+    20px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background: #d98f89;
+
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+@keyframes spin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .users-page {
+    padding:
+      0
+      0
+      90px;
+  }
+
+
+  .users-container {
+    min-height: 100vh;
+
+    border-radius: 0;
+
+    box-shadow: none;
+  }
+
+
+  .user-card {
+    grid-template-columns:
+      48px
+      1fr;
+  }
+
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+
+  .read-only {
+    display: none;
+  }
+
+}
