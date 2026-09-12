@@ -1,0 +1,277 @@
+<div class="audit-page">
+
+  <main class="audit-container">
+
+
+    <!-- =====================
+         CARGANDO
+    ====================== -->
+
+    @if (vm.isLoading()) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+        <span class="header-title">
+          Auditoría
+        </span>
+
+        <span class="role-badge">
+          AUDITOR
+        </span>
+
+      </header>
+
+
+      <section class="loading-state">
+
+        <div class="loader"></div>
+
+        <p>
+          Cargando carritos...
+        </p>
+
+      </section>
+
+    }
+
+
+    <!-- =====================
+         ERROR
+    ====================== -->
+
+    @else if (vm.hasError()) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+        <span class="header-title">
+          Auditoría
+        </span>
+
+        <span class="role-badge">
+          AUDITOR
+        </span>
+
+      </header>
+
+
+      <section class="error-state">
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <h1>
+          No pudimos cargar
+        </h1>
+
+        <p>
+          Intenta nuevamente.
+        </p>
+
+        <button
+          type="button"
+          class="retry-button"
+          (click)="vm.retry()"
+        >
+          Reintentar
+        </button>
+
+      </section>
+
+    }
+
+
+    <!-- =====================
+         CARRITOS GLOBALES
+    ====================== -->
+
+    @else {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+
+        <span class="header-title">
+          Auditoría
+        </span>
+
+
+        <span class="role-badge">
+          AUDITOR
+        </span>
+
+      </header>
+
+
+      <section class="audit-heading">
+
+        <span class="section-label">
+          AUDITORÍA
+        </span>
+
+        <h1>
+          Carritos globales
+        </h1>
+
+        <p>
+          Histórico de carritos
+          registrados.
+        </p>
+
+      </section>
+
+
+      <section class="carts-list">
+
+        @for (
+          cart of vm.carts();
+          track cart.id
+        ) {
+
+          <article
+            class="cart-card"
+          >
+
+
+            <!-- CABECERA -->
+
+            <button
+              type="button"
+              class="cart-header"
+              (click)="
+                vm.toggleCart(
+                  cart.id
+                )
+              "
+            >
+
+              <div class="cart-main">
+
+                <strong class="cart-number">
+                  Carrito #{{ cart.id }}
+                </strong>
+
+                <span class="cart-date">
+                  {{ cart.date }}
+                </span>
+
+              </div>
+
+
+              <div class="cart-user">
+
+                <span>
+                  Usuario {{ cart.userId }}
+                </span>
+
+
+                <span class="arrow">
+
+                  @if (
+                    vm.isExpanded(
+                      cart.id
+                    )
+                  ) {
+
+                    ▲
+
+                  } @else {
+
+                    ▼
+
+                  }
+
+                </span>
+
+              </div>
+
+            </button>
+
+
+            <!-- =====================
+                 CARRITO EXPANDIDO
+            ====================== -->
+
+            @if (
+              vm.isExpanded(
+                cart.id
+              )
+            ) {
+
+              <section class="cart-details">
+
+
+                @if (
+                  cart.items.length > 0
+                ) {
+
+                  @for (
+                    item of cart.items;
+                    track item.productId
+                  ) {
+
+                    <div class="audit-item">
+
+                      <span>
+                        {{ item.title }}
+                      </span>
+
+                      <strong>
+                        x{{ item.quantity }}
+                      </strong>
+
+                    </div>
+
+                  }
+
+                } @else {
+
+                  <p class="no-details">
+                    Sin desglose disponible
+                    en el mockup.
+                  </p>
+
+                }
+
+              </section>
+
+            }
+
+          </article>
+
+        }
+
+      </section>
+
+    }
+
+  </main>
+
+
+  <app-bottom-nav>
+  </app-bottom-nav>
+
+</div>
