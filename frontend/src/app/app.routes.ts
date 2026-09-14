@@ -42,6 +42,9 @@ import {
   authGuard
 } from './core/guards/auth.guard';
 
+import {
+  roleGuard
+} from './core/guards/role.guard';
 
 export const routes: Routes = [
 
@@ -107,17 +110,41 @@ export const routes: Routes = [
 
 
   {
-    path: 'audit/users',
-    component: Users,
-    canActivate: [authGuard]
-  },
+  path: 'audit/users',
+
+  component: Users,
+
+  canActivate: [
+    authGuard,
+    roleGuard
+  ],
+
+  data: {
+    allowedRoles: [
+      'ADMIN',
+      'AUDITOR'
+    ]
+  }
+},
 
 
   {
-    path: 'audit/carts',
-    component: AuditCarts,
-    canActivate: [authGuard]
-  },
+  path: 'audit/carts',
+
+  component: AuditCarts,
+
+  canActivate: [
+    authGuard,
+    roleGuard
+  ],
+
+  data: {
+    allowedRoles: [
+      'ADMIN',
+      'AUDITOR'
+    ]
+  }
+},
 
 
   /*

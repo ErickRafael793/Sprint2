@@ -24,7 +24,7 @@
         </span>
 
         <span class="role-badge">
-          AUDITOR
+         {{ vm.session()?.role ?? 'CONTROL' }}
         </span>
 
       </header>
@@ -64,7 +64,7 @@
         </span>
 
         <span class="role-badge">
-          AUDITOR
+         {{ vm.session()?.role ?? 'CONTROL' }}
         </span>
 
       </header>
@@ -120,7 +120,7 @@
 
 
         <span class="role-badge">
-          AUDITOR
+         {{ vm.session()?.role ?? 'CONTROL' }}
         </span>
 
       </header>
@@ -250,8 +250,8 @@
                 } @else {
 
                   <p class="no-details">
-                    Sin desglose disponible
-                    en el mockup.
+                    Este carrito no contiene
+                    productos.
                   </p>
 
                 }

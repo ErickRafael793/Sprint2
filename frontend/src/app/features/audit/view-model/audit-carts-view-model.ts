@@ -6,6 +6,10 @@ import {
 } from '@angular/core';
 
 import {
+  UserSession
+} from '../../../core/models/user-session.model';
+
+import {
   Router
 } from '@angular/router';
 
@@ -45,6 +49,10 @@ export class AuditCartsViewModel {
   readonly carts =
     signal<AuditCart[]>([]);
 
+  readonly session =
+    signal<UserSession | null>(
+    null
+  );
 
   readonly status =
     signal<AuditCartsStatus>('idle');
@@ -79,6 +87,7 @@ export class AuditCartsViewModel {
         await this.sessionRepository
           .getCurrentSession();
 
+      this.session.set(session);
 
       /*
        * US12:
@@ -86,8 +95,9 @@ export class AuditCartsViewModel {
        * para AUDITOR.
        */
       if (
-        session?.role !== 'AUDITOR'
-      ) {
+       session?.role !== 'ADMIN' &&
+      session?.role !== 'AUDITOR'
+      )  {
 
         await this.router.navigate(
           ['/catalog'],

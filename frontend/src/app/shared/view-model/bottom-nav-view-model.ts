@@ -57,6 +57,12 @@ export class BottomNavViewModel {
         this.role() === 'AUDITOR'
     );
 
+  readonly canAudit =
+   computed(
+    () =>
+      this.role() === 'ADMIN' ||
+      this.role() === 'AUDITOR'
+  );
 
   async initialize():
     Promise<void> {

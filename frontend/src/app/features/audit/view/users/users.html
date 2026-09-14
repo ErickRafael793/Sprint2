@@ -24,7 +24,7 @@
         </span>
 
         <span class="role-badge">
-          AUDITOR
+         {{ vm.session()?.role ?? 'CONTROL' }}
         </span>
 
       </header>
@@ -64,7 +64,7 @@
         </span>
 
         <span class="role-badge">
-          AUDITOR
+         {{ vm.session()?.role ?? 'CONTROL' }}
         </span>
 
       </header>
@@ -137,7 +137,8 @@
 
         <p>
           Esta sección está disponible
-          únicamente para auditores.
+          únicamente para administradores
+          y auditores.
         </p>
 
         <button
@@ -176,7 +177,7 @@
 
 
         <span class="role-badge">
-          AUDITOR
+         {{ vm.session()?.role ?? 'CONTROL' }}
         </span>
 
       </header>
