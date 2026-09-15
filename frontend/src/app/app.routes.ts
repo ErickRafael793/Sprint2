@@ -27,6 +27,10 @@ import {
 } from './features/inventory/view/product-edit/product-edit';
 
 import {
+  InventoryList
+} from './features/inventory/view/inventory-list/inventory-list';
+
+import {
   Cart
 } from './features/cart/view/cart/cart';
 
@@ -91,7 +95,11 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
 
-
+  {
+  path: 'inventory',
+  component: InventoryList,
+  canActivate: [authGuard]
+  },
   {
     path: 'admin/products/:id/edit',
     component: ProductEdit,

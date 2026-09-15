@@ -207,6 +207,26 @@ export class ProductEditViewModel {
 
     try {
 
+       const updatedProductJson =
+  sessionStorage.getItem('updatedProduct');
+
+let updatedProduct: Product | null = null;
+
+if (updatedProductJson) {
+  try {
+    const storedProduct =
+      JSON.parse(updatedProductJson) as Product;
+
+    if (storedProduct.id === id) {
+      updatedProduct = storedProduct;
+    }
+
+    sessionStorage.removeItem('updatedProduct');
+
+  } catch {
+    sessionStorage.removeItem('updatedProduct');
+  }
+}
       const [
         product,
         session
@@ -236,10 +256,11 @@ export class ProductEditViewModel {
       }
 
 
-      this.product.set(
-        product
-      );
-
+      if (updatedProduct && updatedProduct.id === id) {
+      this.product.set(updatedProduct);
+        } else {
+           this.product.set(product);
+        }
 
       /*
        * Precargar formulario
@@ -420,18 +441,31 @@ export class ProductEditViewModel {
        * y avisamos que la edición
        * terminó correctamente.
        */
-      await this.router.navigate(
-        [
-          '/products',
-          updated.id
-        ],
-        {
-          queryParams: {
-            updated: 'success'
-          }
-        }
-      );
+    const visuallyUpdatedProduct: Product = {
+  ...product,
+  title: this.title().trim(),
+  price: Number(this.price()),
+  category: this.category(),
+  image: this.image().trim(),
+  description: this.description().trim()
+};
 
+sessionStorage.setItem(
+  'updatedProduct',
+  JSON.stringify(visuallyUpdatedProduct)
+);
+
+await this.router.navigate(
+  [
+    '/products',
+    updated.id
+  ],
+  {
+    queryParams: {
+      updated: 'success'
+    }
+  }
+);
     } catch {
 
       this.status.set(
