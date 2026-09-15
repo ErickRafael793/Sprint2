@@ -60,7 +60,7 @@ export class BottomNavViewModel {
   readonly canAudit =
    computed(
     () =>
-      this.role() === 'ADMIN' ||
+ 
       this.role() === 'AUDITOR'
   );
 
