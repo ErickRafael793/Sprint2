@@ -162,6 +162,33 @@ export class MockProductRepository
       : null;
 
   }
+  
+      async getCategories(): Promise<string[]> {
+
+        await this.simulateDelay(300);
+        this.validateConnection();
+
+        const categories = new Set(
+            this.products.map(p => p.category)
+        );
+
+        return Array.from(categories);
+
+    }
+
+
+    async getProductsByCategory(
+        category: string
+    ): Promise<Product[]> {
+
+        await this.simulateDelay(500);
+        this.validateConnection();
+
+        return this.products
+            .filter(p => p.category === category)
+            .map(p => ({ ...p }));
+
+    }
 
 
   async createProduct(

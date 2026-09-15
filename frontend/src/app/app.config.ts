@@ -38,6 +38,11 @@ import {
   ProductRepository
 } from './core/repositories/product.repository';
 
+
+import {
+    FakeStoreProductRepository
+} from './core/repositories/fake-store-product.repository';
+
 import {
   MockProductRepository
 } from './core/mocks/mock-product.repository';
@@ -97,8 +102,7 @@ export const appConfig: ApplicationConfig = {
 
     {
       provide: ProductRepository,
-      useClass: MockProductRepository
-    },
+    useClass: FakeStoreProductRepository    },
 
 
     {

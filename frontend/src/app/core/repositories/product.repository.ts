@@ -18,6 +18,15 @@ export abstract class ProductRepository {
     Promise<Product[]>;
 
 
+        // US04
+    abstract getCategories():
+        Promise<string[]>;
+
+    // US04
+    abstract getProductsByCategory(
+        category: string
+    ): Promise<Product[]>;
+
   // US05
   abstract getProductById(
     id: number
