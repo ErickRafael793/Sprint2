@@ -136,7 +136,6 @@ export class ProductEditViewModel {
     const value =
       Number(this.price());
 
-
     return (
       this.price().trim() === '' ||
       Number.isNaN(value) ||
@@ -181,7 +180,9 @@ export class ProductEditViewModel {
 
   async initialize(): Promise<void> {
 
-    this.status.set('loading');
+    this.status.set(
+      'loading'
+    );
 
 
     const idParam =
@@ -199,7 +200,9 @@ export class ProductEditViewModel {
       Number.isNaN(id)
     ) {
 
-      this.status.set('not-found');
+      this.status.set(
+        'not-found'
+      );
 
       return;
     }
@@ -207,26 +210,6 @@ export class ProductEditViewModel {
 
     try {
 
-       const updatedProductJson =
-  sessionStorage.getItem('updatedProduct');
-
-let updatedProduct: Product | null = null;
-
-if (updatedProductJson) {
-  try {
-    const storedProduct =
-      JSON.parse(updatedProductJson) as Product;
-
-    if (storedProduct.id === id) {
-      updatedProduct = storedProduct;
-    }
-
-    sessionStorage.removeItem('updatedProduct');
-
-  } catch {
-    sessionStorage.removeItem('updatedProduct');
-  }
-}
       const [
         product,
         session
@@ -256,14 +239,14 @@ if (updatedProductJson) {
       }
 
 
-      if (updatedProduct && updatedProduct.id === id) {
-      this.product.set(updatedProduct);
-        } else {
-           this.product.set(product);
-        }
+      this.product.set(
+        product
+      );
+
 
       /*
        * Precargar formulario
+       * con los datos actuales.
        */
       this.title.set(
         product.title
@@ -364,7 +347,6 @@ if (updatedProductJson) {
     ) {
 
       return;
-
     }
 
 
@@ -376,7 +358,6 @@ if (updatedProductJson) {
     if (this.formInvalid()) {
 
       return;
-
     }
 
 
@@ -387,7 +368,6 @@ if (updatedProductJson) {
     if (!product) {
 
       return;
-
     }
 
 
@@ -432,40 +412,18 @@ if (updatedProductJson) {
         );
 
         return;
-
       }
 
 
       /*
-       * Regresamos al detalle
-       * y avisamos que la edición
-       * terminó correctamente.
+       * Edición terminada correctamente.
+       * Regresamos al inventario.
        */
-    const visuallyUpdatedProduct: Product = {
-  ...product,
-  title: this.title().trim(),
-  price: Number(this.price()),
-  category: this.category(),
-  image: this.image().trim(),
-  description: this.description().trim()
-};
+      await this.router.navigate([
+        '/inventory'
+      ]);
 
-sessionStorage.setItem(
-  'updatedProduct',
-  JSON.stringify(visuallyUpdatedProduct)
-);
 
-await this.router.navigate(
-  [
-    '/products',
-    updated.id
-  ],
-  {
-    queryParams: {
-      updated: 'success'
-    }
-  }
-);
     } catch {
 
       this.status.set(
@@ -477,26 +435,15 @@ await this.router.navigate(
   }
 
 
+  /*
+   * Flecha de regresar.
+   * Como venimos del inventario,
+   * regresamos al inventario.
+   */
   goBack(): void {
 
-    const product =
-      this.product();
-
-
-    if (product) {
-
-      this.router.navigate([
-        '/products',
-        product.id
-      ]);
-
-      return;
-
-    }
-
-
     this.router.navigate([
-      '/catalog'
+      '/inventory'
     ]);
 
   }
@@ -518,7 +465,6 @@ await this.router.navigate(
     if (!value.trim()) {
 
       return false;
-
     }
 
 
@@ -536,7 +482,6 @@ await this.router.navigate(
     } catch {
 
       return false;
-
     }
 
   }

@@ -23,7 +23,7 @@
 
 .edit-container {
   width: 100%;
-  max-width: 480px;
+max-width: 580px;  
 
   min-height:
     calc(100vh - 48px);
@@ -170,7 +170,7 @@
 .input-group input,
 .input-group select,
 .input-group textarea {
-  width: 100%;
+  width: 90%;
 
   padding:
     13px
