@@ -1,0 +1,544 @@
+<div class="detail-page">
+
+  <main class="detail-container">
+
+
+    <!-- =====================
+         LOADING
+    ====================== -->
+
+    @if (vm.isLoading()) {
+
+      <section class="loading-state">
+
+        <div class="loader"></div>
+
+        <p>
+          Cargando producto...
+        </p>
+
+      </section>
+
+    }
+
+
+    <!-- =====================
+         PRODUCTO INEXISTENTE
+    ====================== -->
+
+    @else if (vm.isNotFound()) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+        <span class="header-title">
+          Detalle
+        </span>
+
+        <span class="role-badge">
+          {{ vm.role() }}
+        </span>
+
+      </header>
+
+
+      <section class="not-found-state">
+
+        <div class="not-found-icon">
+          !
+        </div>
+
+        <h1>
+          Producto no disponible
+        </h1>
+
+        <p>
+          No pudimos cargar
+          este artículo.
+        </p>
+
+        <button
+          type="button"
+          class="catalog-button"
+          (click)="vm.goToCatalog()"
+        >
+          Volver al catálogo
+        </button>
+
+      </section>
+
+    }
+
+
+    <!-- =====================
+         ERROR DE RED
+    ====================== -->
+
+    @else if (vm.hasError()) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+        <span class="header-title">
+          Detalle
+        </span>
+
+        <span></span>
+
+      </header>
+
+
+      <section class="not-found-state">
+
+        <div class="not-found-icon">
+          !
+        </div>
+
+        <h1>
+          No pudimos cargar
+        </h1>
+
+        <p>
+          Revisa tu conexión
+          e intenta nuevamente.
+        </p>
+
+        <button
+          type="button"
+          class="catalog-button"
+          (click)="vm.initialize()"
+        >
+          Reintentar
+        </button>
+
+      </section>
+
+    }
+
+
+    <!-- =====================
+         DETALLE DEL PRODUCTO
+    ====================== -->
+
+    @else if (vm.product(); as product) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+
+        <span class="header-title">
+          Detalle
+        </span>
+
+
+        <span class="role-badge">
+          {{ vm.role() }}
+        </span>
+
+      </header>
+
+
+      <!-- =====================
+           US07
+           PRODUCTO ACTUALIZADO
+      ====================== -->
+
+      @if (vm.updateSuccess()) {
+
+        <div class="update-success">
+
+          <strong>
+            LISTO
+          </strong>
+
+          <span>
+            Producto actualizado
+            (Simulación)
+          </span>
+
+        </div>
+
+      }
+
+
+      <!-- =====================
+           IMAGEN
+      ====================== -->
+
+      <section class="product-image-wrapper">
+
+        <img
+          [src]="product.image"
+          [alt]="product.title"
+          class="product-image"
+        />
+
+      </section>
+
+
+      <!-- =====================
+           INFORMACIÓN
+      ====================== -->
+
+      <section class="product-content">
+
+        <div class="product-heading">
+
+          <div>
+
+            <span class="category">
+              {{ product.category }}
+            </span>
+
+            <h1>
+              {{ product.title }}
+            </h1>
+
+          </div>
+
+
+          <strong class="price">
+
+            {{
+              product.price
+                | currency:
+                  'USD':
+                  'symbol':
+                  '1.2-2'
+            }}
+
+          </strong>
+
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <!-- =====================
+             DESCRIPCIÓN
+        ====================== -->
+
+        <section class="description-section">
+
+          <span class="section-label">
+            DESCRIPCIÓN
+          </span>
+
+          <p>
+            {{ product.description }}
+          </p>
+
+        </section>
+
+
+        <!-- =====================
+             AUDITOR
+             SOLO LECTURA
+        ====================== -->
+
+        @if (vm.isReadOnly()) {
+
+          <div class="read-only-box">
+
+            <span class="read-only-icon">
+              ◉
+            </span>
+
+            <div>
+
+              <strong>
+                SOLO LECTURA
+              </strong>
+
+              <p>
+                Puedes consultar la
+                información del producto.
+              </p>
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <!-- =====================
+             CLIENTE
+             US09 - CARRITO
+        ====================== -->
+
+        @if (vm.canAddToCart()) {
+
+          <section class="purchase-section">
+
+            <span class="section-label">
+              CANTIDAD
+            </span>
+
+
+            <!-- SELECTOR DE CANTIDAD -->
+
+            <div class="quantity-selector">
+
+              <button
+                type="button"
+                class="quantity-button"
+                [disabled]="
+                  !vm.canDecreaseQuantity() ||
+                  vm.addingToCart()
+                "
+                (click)="vm.decreaseQuantity()"
+              >
+                −
+              </button>
+
+
+              <strong class="quantity-value">
+                {{ vm.quantity() }}
+              </strong>
+
+
+              <button
+                type="button"
+                class="quantity-button"
+                [disabled]="vm.addingToCart()"
+                (click)="vm.increaseQuantity()"
+              >
+                +
+              </button>
+
+            </div>
+
+
+            <!-- AGREGAR AL CARRITO -->
+
+            <button
+              type="button"
+              class="add-cart-button"
+              [disabled]="vm.addingToCart()"
+              (click)="vm.addToCart()"
+            >
+
+              @if (vm.addingToCart()) {
+
+                Añadiendo...
+
+              } @else {
+
+                Agregar al carrito
+
+              }
+
+            </button>
+
+
+            <!-- US09
+                 PRODUCTO AGREGADO
+            -->
+
+            @if (vm.cartMessage()) {
+
+              <div class="cart-success">
+
+                <strong>
+                  LISTO
+                </strong>
+
+                <span>
+                  {{ vm.cartMessage() }}
+                </span>
+
+              </div>
+
+            }
+
+
+            <!-- ERROR DEL CARRITO -->
+
+            @if (vm.cartError()) {
+
+              <div class="cart-error">
+
+                No pudimos añadir
+                el producto al carrito.
+
+              </div>
+
+            }
+
+          </section>
+
+        }
+
+
+        <!-- =====================
+             ADMIN
+             US07 + US08
+        ====================== -->
+
+        @if (vm.canManage()) {
+
+          <section class="admin-actions">
+
+            <span class="section-label">
+              GESTIÓN HABILITADA
+            </span>
+
+
+            <div class="action-buttons">
+
+
+              <!-- =====================
+                   US07 - EDITAR
+              ====================== -->
+
+              <button
+                type="button"
+                class="edit-button"
+                (click)="vm.editProduct()"
+              >
+                Editar
+              </button>
+
+
+              <!-- =====================
+                   US08 - ELIMINAR
+              ====================== -->
+
+              <button
+                type="button"
+                class="delete-button"
+                (click)="vm.requestDelete()"
+              >
+                Eliminar
+              </button>
+
+            </div>
+
+          </section>
+
+        }
+
+      </section>
+
+
+      <!-- =========================
+           US08
+           MODAL ELIMINAR PRODUCTO
+      ========================== -->
+
+      @if (vm.showDeleteConfirmation()) {
+
+        <div
+          class="modal-backdrop"
+          (click)="vm.cancelDelete()"
+        >
+
+          <section
+            class="delete-modal"
+            (click)="$event.stopPropagation()"
+          >
+
+            <div class="delete-modal-icon">
+              !
+            </div>
+
+
+            <h2>
+              Eliminar producto
+            </h2>
+
+
+            <p>
+              Esta acción requiere
+              confirmación.
+            </p>
+
+
+            <!-- ERROR AL ELIMINAR -->
+
+            @if (vm.deleteError()) {
+
+              <div class="delete-error">
+
+                No pudimos eliminar
+                el producto.
+
+                Intenta nuevamente.
+
+              </div>
+
+            }
+
+
+            <div class="delete-actions">
+
+
+              <!-- CANCELAR -->
+
+              <button
+                type="button"
+                class="cancel-delete-button"
+                [disabled]="vm.deleting()"
+                (click)="vm.cancelDelete()"
+              >
+                Cancelar
+              </button>
+
+
+              <!-- CONFIRMAR ELIMINACIÓN -->
+
+              <button
+                type="button"
+                class="confirm-delete-button"
+                [disabled]="vm.deleting()"
+                (click)="vm.confirmDelete()"
+              >
+
+                @if (vm.deleting()) {
+
+                  Eliminando...
+
+                } @else {
+
+                  Eliminar
+
+                }
+
+              </button>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      }
+
+    }
+
+  </main>
+
+</div>

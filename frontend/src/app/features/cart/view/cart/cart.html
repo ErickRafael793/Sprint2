@@ -1,0 +1,463 @@
+<div class="cart-page">
+
+  <main class="cart-container">
+
+
+    <!-- CARGANDO -->
+
+    @if (vm.isLoading()) {
+
+      <section class="loading-state">
+
+        <div class="loader"></div>
+
+        <span>
+          Cargando carrito...
+        </span>
+
+      </section>
+
+    }
+
+
+    <!-- ERROR -->
+
+    @else if (vm.status() === 'error') {
+
+      <section class="state-box">
+
+        <div class="state-icon">
+          !
+        </div>
+
+        <h1>
+          No pudimos cargar
+        </h1>
+
+        <p>
+          Intenta nuevamente.
+        </p>
+
+        <button
+          type="button"
+          (click)="vm.retry()"
+        >
+          Reintentar
+        </button>
+
+      </section>
+
+    }
+
+
+    <!-- SOLO CLIENTE -->
+
+    @else if (!vm.canAccess()) {
+
+      <section class="state-box">
+
+        <div class="state-icon">
+          !
+        </div>
+
+        <h1>
+          Sin acceso
+        </h1>
+
+        <p>
+          El carrito está disponible
+          para clientes.
+        </p>
+
+        <button
+          type="button"
+          (click)="vm.goToCatalog()"
+        >
+          Ir al catálogo
+        </button>
+
+      </section>
+
+    }
+
+
+    @else {
+
+      <!-- HEADER -->
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+
+        <span class="header-title">
+          Mi carrito
+        </span>
+
+
+        <span class="role-badge">
+          CLIENTE
+        </span>
+
+      </header>
+
+
+      <!-- VACÍO -->
+
+      @if (vm.isEmpty()) {
+
+        <section class="empty-cart">
+
+          <div class="empty-number">
+            0
+          </div>
+
+          <h1>
+            Tu carrito está vacío
+          </h1>
+
+          <p>
+            Explora el catálogo
+            y agrega productos.
+          </p>
+
+          <button
+            type="button"
+            class="explore-button"
+            (click)="vm.goToCatalog()"
+          >
+            Explora el catálogo
+          </button>
+
+        </section>
+
+
+        <div class="summary-box">
+
+          <div class="subtotal-row">
+
+            <span>
+              Subtotal
+            </span>
+
+            <strong>
+              $0.00
+            </strong>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="checkout-button"
+            disabled
+          >
+            Proceder al pago
+          </button>
+
+        </div>
+
+      }
+
+
+      <!-- PRODUCTOS -->
+
+      @else {
+
+        <section class="cart-heading">
+
+          <span class="section-label">
+            TU PEDIDO
+          </span>
+
+          <h1>
+            Productos
+          </h1>
+
+          <p>
+            {{ vm.totalUnits() }}
+            unidades en tu carrito
+          </p>
+
+        </section>
+
+
+        <section class="cart-items">
+
+          @for (
+            item of vm.items();
+            track item.product.id
+          ) {
+
+            <article class="cart-item">
+
+              <img
+                class="item-image"
+                [src]="item.product.image"
+                [alt]="item.product.title"
+              />
+
+
+              <div class="item-info">
+
+                <div class="item-top">
+
+                  <div>
+
+                    <span class="item-category">
+                      {{ item.product.category }}
+                    </span>
+
+                    <h2>
+                      {{ item.product.title }}
+                    </h2>
+
+                  </div>
+
+
+                  <strong class="item-price">
+
+                    {{
+                      item.product.price
+                        | currency:
+                          'USD':
+                          'symbol':
+                          '1.2-2'
+                    }}
+
+                  </strong>
+
+                </div>
+
+
+                <div class="item-actions">
+
+                  <div class="quantity-selector">
+
+                    <button
+                      type="button"
+                      [disabled]="
+                        item.quantity <= 1 ||
+                        vm.updatingProductId()
+                          !== null
+                      "
+                      (click)="vm.decrease(item)"
+                    >
+                      −
+                    </button>
+
+
+                    <strong>
+                      {{ item.quantity }}
+                    </strong>
+
+
+                    <button
+                      type="button"
+                      [disabled]="
+                        vm.updatingProductId()
+                          !== null
+                      "
+                      (click)="vm.increase(item)"
+                    >
+                      +
+                    </button>
+
+                  </div>
+
+
+                  <button
+                    type="button"
+                    class="remove-button"
+                    [disabled]="
+                      vm.updatingProductId()
+                        !== null
+                    "
+                    (click)="vm.requestRemove(item)"
+                  >
+                    Eliminar
+                  </button>
+
+                </div>
+
+
+                @if (
+                  vm.updatingProductId()
+                    === item.product.id
+                ) {
+
+                  <span class="updating-text">
+                    Actualizando...
+                  </span>
+
+                }
+
+              </div>
+
+            </article>
+
+          }
+
+        </section>
+
+
+        @if (vm.operationError()) {
+
+          <div class="operation-error">
+
+            No pudimos realizar
+            la operación.
+
+          </div>
+
+        }
+
+
+        <!-- SUBTOTAL -->
+
+        <section class="summary-box">
+
+          <div class="subtotal-row">
+
+            <span>
+              Subtotal
+            </span>
+
+            <strong>
+
+              {{
+                vm.subtotal()
+                  | currency:
+                    'USD':
+                    'symbol':
+                    '1.2-2'
+              }}
+
+            </strong>
+
+          </div>
+
+
+          <!--
+            El mockup muestra este botón,
+            pero US10 no define todavía
+            el proceso de pago.
+          -->
+
+          <button
+            type="button"
+            class="checkout-button"
+          >
+            Proceder al pago
+          </button>
+
+        </section>
+
+      }
+
+
+      <!-- CONFIRMAR ELIMINACIÓN -->
+
+      @if (vm.showRemoveConfirmation()) {
+
+        <div
+          class="modal-backdrop"
+          (click)="vm.cancelRemove()"
+        >
+
+          <section
+            class="remove-modal"
+            (click)="$event.stopPropagation()"
+          >
+
+            <div class="remove-icon">
+              !
+            </div>
+
+
+            <h2>
+              Quitar del carrito
+            </h2>
+
+
+            <p>
+              Se actualizará el
+              total del pedido.
+            </p>
+
+
+            @if (vm.selectedForRemoval(); as item) {
+
+              <strong class="remove-product">
+                {{ item.product.title }}
+              </strong>
+
+            }
+
+
+            @if (vm.operationError()) {
+
+              <div class="modal-error">
+
+                No pudimos quitar
+                el artículo.
+
+              </div>
+
+            }
+
+
+            <div class="modal-actions">
+
+              <button
+                type="button"
+                class="cancel-button"
+                [disabled]="vm.removing()"
+                (click)="vm.cancelRemove()"
+              >
+                Cancelar
+              </button>
+
+
+              <button
+                type="button"
+                class="remove-confirm-button"
+                [disabled]="vm.removing()"
+                (click)="vm.confirmRemove()"
+              >
+
+                @if (vm.removing()) {
+
+                  Quitando...
+
+                } @else {
+
+                  Quitar
+
+                }
+
+              </button>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      }
+
+    }
+
+  </main>
+
+
+  <app-bottom-nav>
+  </app-bottom-nav>
+
+</div>

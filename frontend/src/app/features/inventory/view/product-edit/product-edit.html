@@ -1,0 +1,398 @@
+<div class="edit-page">
+
+  <main class="edit-container">
+
+
+    <!-- CARGA INICIAL -->
+
+    @if (vm.isLoading()) {
+
+      <section class="loading-state">
+
+        <div class="loader"></div>
+
+        <p>
+          Cargando producto...
+        </p>
+
+      </section>
+
+    }
+
+
+    <!-- PRODUCTO NO EXISTE -->
+
+    @else if (vm.isNotFound()) {
+
+      <section class="state-message">
+
+        <div class="state-icon">
+          !
+        </div>
+
+        <h1>
+          Producto no disponible
+        </h1>
+
+        <p>
+          No encontramos el producto
+          que deseas editar.
+        </p>
+
+        <button
+          type="button"
+          (click)="vm.goToCatalog()"
+        >
+          Volver al catálogo
+        </button>
+
+      </section>
+
+    }
+
+
+    <!-- NO ES ADMIN -->
+
+    @else if (!vm.canManage()) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goBack()"
+        >
+          ‹
+        </button>
+
+        <span class="header-title">
+          Editar producto
+        </span>
+
+        <span class="role-badge">
+          {{ vm.session()?.role ?? 'CLIENTE' }}
+        </span>
+
+      </header>
+
+
+      <section class="state-message">
+
+        <div class="state-icon">
+          !
+        </div>
+
+        <h1>
+          Sin acceso
+        </h1>
+
+        <p>
+          Solo un administrador
+          puede editar productos.
+        </p>
+
+        <button
+          type="button"
+          (click)="vm.goToCatalog()"
+        >
+          Volver al catálogo
+        </button>
+
+      </section>
+
+    }
+
+
+    <!-- FORMULARIO -->
+
+    @else {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          [disabled]="vm.isSaving()"
+          (click)="vm.goBack()"
+        >
+          ‹
+        </button>
+
+
+        <span class="header-title">
+          Editar producto
+        </span>
+
+
+        <span class="role-badge">
+          ADMIN
+        </span>
+
+      </header>
+      
+
+
+      <section class="form-heading">
+
+        <span class="section-label">
+          INVENTARIO
+        </span>
+
+        <h1>
+          Editar información
+        </h1>
+
+        <p>
+          Actualiza los datos
+          del artículo.
+        </p>
+
+      </section>
+
+
+      <form
+        class="edit-form"
+        (submit)="
+          vm.saveChanges();
+          $event.preventDefault()
+        "
+      >
+
+
+        <!-- TÍTULO -->
+
+        <div class="input-group">
+
+          <label for="title">
+            TÍTULO
+          </label>
+
+          <input
+            id="title"
+            type="text"
+            [value]="vm.title()"
+            [disabled]="vm.isSaving()"
+            [class.input-error]="
+              vm.titleInvalid()
+            "
+            (input)="
+              vm.setTitle(
+                $any($event.target).value
+              )
+            "
+          />
+
+          @if (vm.titleInvalid()) {
+
+            <span class="field-error">
+              Revisa este campo
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- PRECIO -->
+
+        <div class="input-group">
+
+          <label for="price">
+            PRECIO
+          </label>
+
+          <input
+            id="price"
+            type="text"
+            inputmode="decimal"
+            [value]="vm.price()"
+            [disabled]="vm.isSaving()"
+            [class.input-error]="
+              vm.priceInvalid()
+            "
+            (input)="
+              vm.setPrice(
+                $any($event.target).value
+              )
+            "
+          />
+
+          @if (vm.priceInvalid()) {
+
+            <span class="field-error">
+              Revisa este campo
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- CATEGORÍA -->
+
+        <div class="input-group">
+
+          <label for="category">
+            CATEGORÍA
+          </label>
+
+          <select
+            id="category"
+            [value]="vm.category()"
+            [disabled]="vm.isSaving()"
+            [class.input-error]="
+              vm.categoryInvalid()
+            "
+            (change)="
+              vm.setCategory(
+                $any($event.target).value
+              )
+            "
+          >
+
+            <option value="">
+              Seleccionar
+            </option>
+
+            @for (
+              category of vm.categories;
+              track category
+            ) {
+
+              <option
+                [value]="category"
+              >
+                {{ category }}
+              </option>
+
+            }
+
+          </select>
+
+
+          @if (vm.categoryInvalid()) {
+
+            <span class="field-error">
+              Revisa este campo
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- URL -->
+
+        <div class="input-group">
+
+          <label for="image">
+            URL DE IMAGEN
+          </label>
+
+          <input
+            id="image"
+            type="text"
+            [value]="vm.image()"
+            [disabled]="vm.isSaving()"
+            [class.input-error]="
+              vm.imageInvalid()
+            "
+            (input)="
+              vm.setImage(
+                $any($event.target).value
+              )
+            "
+          />
+
+          @if (vm.imageInvalid()) {
+
+            <span class="field-error">
+              Revisa este campo
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- DESCRIPCIÓN -->
+
+        <div class="input-group">
+
+          <label for="description">
+            DESCRIPCIÓN
+          </label>
+
+          <textarea
+            id="description"
+            rows="5"
+            [value]="vm.description()"
+            [disabled]="vm.isSaving()"
+            [class.input-error]="
+              vm.descriptionInvalid()
+            "
+            (input)="
+              vm.setDescription(
+                $any($event.target).value
+              )
+            "
+          ></textarea>
+
+
+          @if (vm.descriptionInvalid()) {
+
+            <span class="field-error">
+              Revisa este campo
+            </span>
+
+          }
+
+        </div>
+
+
+        @if (vm.hasError()) {
+
+          <div class="error-notice">
+
+            No pudimos guardar
+            los cambios.
+
+            Verifica tu conexión
+            e intenta nuevamente.
+
+          </div>
+
+        }
+
+
+        <button
+          class="save-button"
+          type="submit"
+          [disabled]="vm.isSaving()"
+        >
+
+          @if (vm.isSaving()) {
+
+            <span class="button-loader"></span>
+
+            Guardando...
+
+          } @else {
+
+            Guardar cambios
+
+          }
+
+        </button>
+
+      </form>
+
+    }
+
+  </main>
+
+
+  <app-bottom-nav>
+  </app-bottom-nav>
+
+</div>
