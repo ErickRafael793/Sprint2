@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cartRoutes = require('./routes/cart.routes');
 
 const app = express();
 
@@ -11,6 +12,8 @@ const PORT = 3000;
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
+
+app.use('/carts', cartRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
