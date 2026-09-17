@@ -53,8 +53,8 @@ import {
 } from './core/repositories/cart.repository';
 
 import {
-  HttpCartRepository
-} from './core/repositories/http-cart.repository';
+  LocalCartRepository
+} from './core/repositories/local-cart.repository';
 
 
 import {
@@ -107,7 +107,7 @@ export const appConfig: ApplicationConfig = {
 
     {
       provide: CartRepository,
-      useClass: HttpCartRepository
+      useClass: LocalCartRepository
     },
 
 
