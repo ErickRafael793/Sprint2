@@ -70,25 +70,6 @@
     </header>
 
 
-    <section class="search-section">
-
-      <label
-        for="product-search"
-      >
-        Buscar producto
-      </label>
-
-      <input
-        id="product-search"
-        type="text"
-        placeholder="Escribe el nombre del producto..."
-        [value]="vm.search()"
-        (input)="vm.setSearch($any($event.target).value)"
-      />
-
-    </section>
-
-
     @if (vm.filteredProducts().length === 0) {
 
       <section class="inventory-state">
