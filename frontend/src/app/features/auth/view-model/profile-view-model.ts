@@ -45,6 +45,10 @@ export class ProfileViewModel {
     signal<boolean>(true);
 
 
+  readonly cartItems =
+    signal<number>(0);
+
+
   readonly showLogoutConfirmation =
     signal<boolean>(false);
 
@@ -125,6 +129,34 @@ export class ProfileViewModel {
       this.session.set(
         session
       );
+
+
+      if (
+        session?.role === 'CLIENTE'
+      ) {
+
+        const items =
+          await this.cartRepository
+            .getItems();
+
+        const totalItems =
+          items.reduce(
+            (total, item) =>
+              total + item.quantity,
+            0
+          );
+
+        this.cartItems.set(
+          totalItems
+        );
+
+      } else {
+
+        this.cartItems.set(
+          0
+        );
+
+      }
 
 
       if (!session) {
