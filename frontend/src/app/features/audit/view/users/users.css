@@ -2,49 +2,39 @@
   display: block;
 }
 
-
 .users-page {
   min-height: 100vh;
 
   padding:
-    24px
-    18px
-    105px;
+    clamp(16px, 3vw, 40px)
+    clamp(16px, 4vw, 40px)
+    110px;
 
-  background:
-    linear-gradient(
-      180deg,
-      #f8efe5 0%,
-      #faf8f4 45%,
-      #edf3f5 100%
-    );
+  background: var(--color-background);
 }
-
 
 .users-container {
   width: 100%;
-  max-width: 560px;
+  max-width: 1150px;
 
-  min-height:
-    calc(100vh - 48px);
+  min-height: calc(100vh - 80px);
 
   margin: 0 auto;
 
-  padding: 22px;
+  padding:
+    clamp(20px, 3vw, 34px);
 
-  border-radius: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
 
-  background: #ffffff;
+  background: var(--color-surface);
 
   box-shadow:
-    0 15px 45px
-    rgba(54, 54, 54, 0.08);
+    0 12px 38px
+    rgba(48, 56, 58, .08);
 }
 
-
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .top-bar {
   display: grid;
@@ -56,247 +46,280 @@
 
   align-items: center;
 
-  min-height: 45px;
+  min-height: 48px;
+
+  padding-bottom: 20px;
+
+  border-bottom:
+    1px solid
+    var(--color-border);
 }
 
-
 .back-button {
+  display: flex;
+
   width: 36px;
   height: 36px;
+
+  align-items: center;
+  justify-content: center;
 
   padding: 0;
 
   border: none;
+  border-radius: 10px;
 
-  background: transparent;
+  background: var(--color-secondary);
+  color: var(--color-text);
 
-  color: #30343b;
-
-  font-size: 31px;
+  font-size: 30px;
 
   cursor: pointer;
 }
 
-
 .header-title {
-  font-size: 16px;
+  margin-left: 10px;
 
+  color: var(--color-text);
+
+  font-size: 16px;
   font-weight: 700;
 }
-
 
 .role-badge {
   padding:
     7px
     11px;
 
+  border:
+    1px solid
+    var(--color-border);
+
   border-radius: 999px;
 
-  background: #dde9ee;
+  background:
+    var(--color-secondary);
 
-  color: #53656d;
+  color:
+    var(--color-text-secondary);
 
   font-size: 10px;
-
   font-weight: 800;
-
-  letter-spacing: 0.07em;
 }
 
-
-/* =========================
-   TITULO
-========================= */
+/* TÍTULO */
 
 .directory-heading {
   margin:
-    42px
+    38px
     0
-    26px;
+    28px;
 }
-
 
 .section-label {
-  color: #a56f6b;
+  color:
+    var(--color-primary-dark);
 
   font-size: 10px;
-
   font-weight: 800;
 
-  letter-spacing: 0.11em;
+  letter-spacing: .11em;
 }
-
 
 .directory-heading h1 {
   margin:
     6px
     0;
 
-  color: #30343b;
+  color:
+    var(--color-text);
 
-  font-size: 28px;
+  font-size:
+    clamp(28px, 4vw, 36px);
 }
-
 
 .directory-heading p {
   margin: 0;
 
-  color: #87898d;
+  color:
+    var(--color-text-secondary);
 
   font-size: 14px;
 }
 
-
-/* =========================
-   USUARIOS
-========================= */
+/* LISTA */
 
 .users-list {
-  display: flex;
+  display: grid;
 
-  flex-direction: column;
+  grid-template-columns:
+    1fr;
 
-  gap: 13px;
+  gap: 16px;
 }
-
 
 .user-card {
   display: grid;
 
   grid-template-columns:
-    54px
-    1fr
+    64px
+    minmax(0, 1fr)
     auto;
 
   align-items: center;
 
-  gap: 14px;
+  gap: 16px;
 
-  padding:
-    15px
-    14px;
+  padding: 18px;
 
   border:
     1px solid
-    #ece9e4;
+    var(--color-border);
 
-  border-radius: 17px;
+  border-radius: 18px;
 
-  background: #ffffff;
+  background:
+    var(--color-surface);
+
+  box-shadow:
+    0 5px 18px
+    rgba(48, 56, 58, .04);
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
 }
 
+.user-card:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    var(--color-primary);
+
+  box-shadow:
+    0 10px 25px
+    rgba(48, 56, 58, .08);
+}
+
+/* AVATAR */
 
 .avatar {
   display: flex;
 
-  align-items: center;
+  width: 64px;
+  height: 64px;
 
+  align-items: center;
   justify-content: center;
 
-  width: 54px;
-  height: 54px;
+  border-radius: 18px;
 
-  border-radius: 17px;
+  background:
+    var(--color-primary-light);
 
-  background: #dde8df;
+  color:
+    var(--color-primary-dark);
 
-  color: #587060;
-
-  font-size: 14px;
-
+  font-size: 16px;
   font-weight: 800;
 
-  letter-spacing: 0.04em;
+  letter-spacing: .04em;
 }
 
+/* INFORMACIÓN */
 
 .user-info {
   min-width: 0;
 }
 
-
 .user-info h2 {
   margin: 0;
 
-  color: #30343b;
+  color:
+    var(--color-text);
 
-  font-size: 15px;
+  font-size: 16px;
 }
-
 
 .username {
   display: block;
 
-  margin-top: 3px;
+  margin-top: 4px;
 
-  color: #a56f6b;
+  color:
+    var(--color-primary-dark);
 
   font-size: 12px;
-
   font-weight: 700;
 }
-
 
 .contact-info {
   display: flex;
 
   flex-wrap: wrap;
 
-  gap: 5px;
+  gap: 6px;
 
-  margin-top: 7px;
+  margin-top: 8px;
 
-  color: #85878b;
+  color:
+    var(--color-text-secondary);
 
   font-size: 11px;
 }
 
-
 .separator {
-  color: #c5c5c5;
+  color:
+    var(--color-border);
 }
 
+/* SOLO LECTURA */
 
 .read-only {
   padding:
-    6px
-    8px;
+    7px
+    10px;
 
-  border-radius: 8px;
+  border:
+    1px solid
+    var(--color-border);
 
-  background: #f3f0eb;
+  border-radius: 999px;
 
-  color: #85817c;
+  background:
+    var(--color-secondary);
+
+  color:
+    var(--color-text-secondary);
 
   font-size: 9px;
-
   font-weight: 800;
 
-  letter-spacing: 0.06em;
+  letter-spacing: .06em;
 }
 
-
-/* =========================
-   LOADING
-========================= */
+/* ESTADOS */
 
 .loading-state,
 .error-state {
   display: flex;
 
-  min-height: 600px;
+  min-height: 520px;
 
   flex-direction: column;
 
   align-items: center;
-
   justify-content: center;
 
   padding: 25px;
 
+  color:
+    var(--color-text-secondary);
+
   text-align: center;
 }
-
 
 .loader {
   width: 40px;
@@ -306,83 +329,72 @@
 
   border:
     4px solid
-    #eeeeee;
+    var(--color-border);
 
   border-top-color:
-    #d98f89;
+    var(--color-primary-dark);
 
   border-radius: 50%;
 
   animation:
     spin
-    0.8s linear infinite;
+    .8s
+    linear
+    infinite;
 }
-
-
-.loading-state p {
-  color: #777b80;
-
-  font-size: 14px;
-}
-
-
-/* =========================
-   ERROR
-========================= */
 
 .error-icon {
   display: flex;
 
-  align-items: center;
-
-  justify-content: center;
-
   width: 68px;
   height: 68px;
+
+  align-items: center;
+  justify-content: center;
 
   margin-bottom: 20px;
 
   border-radius: 22px;
 
-  background: #f3e8d2;
+  background:
+    var(--color-secondary);
 
-  color: #9d815b;
+  color:
+    var(--color-primary-dark);
 
   font-size: 28px;
-
   font-weight: 800;
 }
-
 
 .error-state h1 {
   margin: 0;
 
-  color: #30343b;
+  color:
+    var(--color-text);
 
   font-size: 22px;
 }
 
-
 .error-state p {
-  max-width: 260px;
+  max-width: 280px;
 
   margin:
     10px
     0
     23px;
 
-  color: #85878b;
+  color:
+    var(--color-text-secondary);
 
   font-size: 14px;
 
   line-height: 1.5;
 }
 
-
 .retry-button {
   min-width: 140px;
 
-  height: 46px;
+  min-height: 46px;
 
   padding:
     0
@@ -392,27 +404,34 @@
 
   border-radius: 13px;
 
-  background: #d98f89;
+  background:
+    var(--color-primary);
 
-  color: #ffffff;
+  color:
+    var(--color-text);
 
   font-weight: 700;
 
   cursor: pointer;
 }
 
+.retry-button:hover {
+  background:
+    var(--color-primary-dark);
+
+  color: #fff;
+}
 
 @keyframes spin {
-
   to {
     transform:
       rotate(360deg);
   }
-
 }
 
+/* MÓVIL */
 
-@media (max-width: 480px) {
+@media (max-width: 599px) {
 
   .users-page {
     padding:
@@ -421,31 +440,70 @@
       90px;
   }
 
-
   .users-container {
     min-height: 100vh;
 
+    padding:
+      20px
+      16px
+      30px;
+
+    border: none;
     border-radius: 0;
 
     box-shadow: none;
   }
 
-
   .user-card {
     grid-template-columns:
-      48px
-      1fr;
-  }
+      52px
+      minmax(0, 1fr);
 
+    gap: 12px;
+
+    padding: 14px;
+  }
 
   .avatar {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+
+    font-size: 14px;
   }
 
-
   .read-only {
+    grid-column:
+      1 / -1;
+
+    justify-self: start;
+  }
+
+  .contact-info {
+    flex-direction: column;
+
+    gap: 3px;
+  }
+
+  .separator {
     display: none;
+  }
+
+}
+
+/* PC */
+
+@media (min-width: 900px) {
+
+  .users-list {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    gap: 18px;
   }
 
 }

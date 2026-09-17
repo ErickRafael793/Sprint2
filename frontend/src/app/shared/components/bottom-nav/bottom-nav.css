@@ -2,6 +2,9 @@
   display: block;
 }
 
+/* =========================================
+   NAVEGACIÓN GENERAL
+========================================= */
 
 .bottom-navigation {
   position: fixed;
@@ -13,51 +16,67 @@
 
   display: flex;
 
-  align-items: center;
+  align-items: stretch;
   justify-content: space-around;
 
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
 
-  height: 74px;
+  min-height: 72px;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   border-top:
-    1px solid #ece9e4;
+    1px solid
+    var(--color-border);
 
-  background:#333333;
+  background:
+    rgba(255, 255, 255, 0.96);
 
   box-shadow:
-    0 -8px 30px
-    rgba(30, 30, 30, 0.05);
+    0 -6px 25px
+    rgba(48, 56, 58, 0.08);
 
   backdrop-filter:
-    blur(12px);
+    blur(14px);
 }
 
 
+/* =========================================
+   OPCIONES
+========================================= */
+
 .nav-item {
+  position: relative;
+
   display: flex;
 
-  min-width: 80px;
+  min-width: 70px;
+
+  flex: 1;
 
   flex-direction: column;
 
   align-items: center;
   justify-content: center;
 
-  gap: 4px;
+  gap: 5px;
+
+  padding:
+    10px
+    8px;
 
   border: none;
 
-  background: transparent;
+  background:
+    transparent;
 
-  color: #f2f2f2;
+  color:
+    var(--color-text-secondary);
 
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 12px;
+
+  font-weight: 600;
 
   text-decoration: none;
 
@@ -65,26 +84,64 @@
 
   transition:
     color 0.2s ease,
+    background 0.2s ease,
     transform 0.15s ease;
 }
 
 
 .nav-item:hover {
-  color: #bb7772;
+  color:
+    var(--color-primary-dark);
+
+  background:
+    var(--color-secondary);
 }
 
 
 .nav-item:active {
-  transform: scale(0.96);
+  transform:
+    scale(0.96);
 }
 
+
+/* =========================================
+   ACTIVO
+========================================= */
 
 .nav-item.active {
-  color: #bb7772;
+  color:
+    var(--color-primary-dark);
 
-  font-weight: 700;
+  font-weight: 800;
 }
 
+
+.nav-item.active::before {
+  content: '';
+
+  position: absolute;
+
+  top: 0;
+
+  left: 50%;
+
+  width: 34px;
+  height: 4px;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:
+    0 0 6px 6px;
+
+  background:
+    var(--color-primary);
+}
+
+
+/* =========================================
+   ICONOS
+========================================= */
 
 .nav-icon {
   display: flex;
@@ -92,23 +149,133 @@
   align-items: center;
   justify-content: center;
 
-  min-height: 23px;
+  min-height: 24px;
 
   font-size: 21px;
+
+  line-height: 1;
 }
 
 
 .add-icon {
-  width: 27px;
-  height: 27px;
+  width: 30px;
+  height: 30px;
 
-  border-radius: 9px;
+  border-radius: 10px;
 
-  background: #d98f89;
+  background:
+    var(--color-primary);
 
-  color: #ffffff;
+  color:
+    var(--color-text);
 
-  font-size: 21px;
+  font-size: 22px;
 
-  font-weight: 400;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   MÓVIL
+========================================= */
+
+@media (max-width: 599px) {
+
+  .bottom-navigation {
+    max-width: none;
+
+    min-height: 70px;
+
+    border-radius: 0;
+  }
+
+
+  .nav-item {
+    min-width: 0;
+
+    padding:
+      9px
+      4px;
+
+    font-size: 10px;
+  }
+
+
+  .nav-icon {
+    font-size: 20px;
+  }
+
+
+  .add-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (
+  min-width: 600px
+)
+and (
+  max-width: 899px
+) {
+
+  .bottom-navigation {
+    width:
+      calc(100% - 40px);
+
+    bottom: 14px;
+
+    border:
+      1px solid
+      var(--color-border);
+
+    border-radius: 20px;
+  }
+
+}
+
+
+/* =========================================
+   PC
+========================================= */
+
+@media (min-width: 900px) {
+
+  .bottom-navigation {
+    width:
+      calc(100% - 80px);
+
+    bottom: 20px;
+
+    min-height: 76px;
+
+    border:
+      1px solid
+      var(--color-border);
+
+    border-radius: 22px;
+
+    box-shadow:
+      0 10px 35px
+      rgba(48, 56, 58, 0.13);
+  }
+
+
+  .nav-item {
+    max-width: 180px;
+
+    font-size: 13px;
+  }
+
+
+  .nav-icon {
+    font-size: 22px;
+  }
+
 }
