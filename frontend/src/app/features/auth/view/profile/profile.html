@@ -1,0 +1,278 @@
+<div class="profile-page">
+
+  <main class="profile-container">
+
+    <header class="top-bar">
+
+    <a
+  class="back-button"
+  routerLink="/catalog"
+  aria-label="Volver al catálogo"
+>
+  ‹
+</a>
+
+      <span class="header-title">
+        Perfil
+      </span>
+
+      @if (vm.session(); as user) {
+
+        <span class="role-badge">
+          {{ user.role }}
+        </span>
+
+      }
+
+    </header>
+
+
+    @if (vm.loading()) {
+
+      <section class="loading-state">
+
+        <div class="loader"></div>
+
+        <p>
+          Cargando perfil...
+        </p>
+
+      </section>
+
+    } @else if (vm.session(); as user) {
+
+
+      <section class="user-header">
+
+        <div class="avatar">
+          {{ vm.initials() }}
+        </div>
+
+        <h1>
+          {{ user.name }}
+        </h1>
+
+        <p>
+          {{ user.email }}
+        </p>
+
+      </section>
+
+
+      <section class="profile-card">
+
+        <!-- USUARIO -->
+        <div class="profile-row">
+
+          <div class="row-icon">
+            👤
+          </div>
+
+          <div class="row-content">
+
+            <span class="row-label">
+              Usuario
+            </span>
+
+            <strong>
+              {{ user.username }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <!-- ROL -->
+        <div class="profile-row">
+
+          <div class="row-icon">
+            🛡
+          </div>
+
+          <div class="row-content">
+
+            <span class="row-label">
+              Rol
+            </span>
+
+            <strong>
+              {{ user.role }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- SOLO CLIENTE -->
+        @if (vm.isClient()) {
+
+          <div class="divider"></div>
+
+          <div class="profile-row">
+
+            <div class="row-icon">
+              🛒
+            </div>
+
+            <div class="row-content">
+
+              <span class="row-label">
+                Carrito
+              </span>
+
+              <strong>
+                {{ vm.cartItems() }}
+                artículos
+              </strong>
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <div class="divider"></div>
+
+
+        <!-- ESTADO -->
+        <div class="profile-row">
+
+          <div class="row-icon">
+            ●
+          </div>
+
+          <div class="row-content">
+
+            <span class="row-label">
+              Estado
+            </span>
+
+            <strong class="active-session">
+              Sesión activa
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <button
+        class="logout-button"
+        type="button"
+        (click)="vm.requestLogout()"
+      >
+
+        Cerrar sesión
+
+      </button>
+
+
+      <p class="security-message">
+
+        Tu sesión está protegida
+        en este dispositivo.
+
+      </p>
+
+
+      @if (vm.showLogoutConfirmation()) {
+
+        <div
+          class="modal-backdrop"
+          (click)="vm.cancelLogout()"
+        >
+
+          <section
+            class="logout-modal"
+            (click)="$event.stopPropagation()"
+          >
+
+            <div class="modal-icon">
+              ↪
+            </div>
+
+            <h2>
+              Cerrar sesión
+            </h2>
+
+           @if (vm.isClient()) {
+
+  <p>
+    Se borrarán tu sesión
+    y carrito local.
+  </p>
+
+} @else {
+
+  <p>
+    Se borrará tu sesión
+    de este dispositivo.
+  </p>
+
+}
+
+            <div class="modal-actions">
+
+              <button
+                class="cancel-button"
+                type="button"
+                [disabled]="vm.loggingOut()"
+                (click)="vm.cancelLogout()"
+              >
+
+                Cancelar
+
+              </button>
+
+
+              <button
+                class="confirm-button"
+                type="button"
+                [disabled]="vm.loggingOut()"
+                (click)="vm.logout()"
+              >
+
+                @if (vm.loggingOut()) {
+                  Cerrando...
+                } @else {
+                  Cerrar sesión
+                }
+
+              </button>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      }
+
+
+    } @else {
+
+      <section class="empty-session">
+
+        <h2>
+          No hay una sesión activa
+        </h2>
+
+        <p>
+          Inicia sesión para continuar.
+        </p>
+
+      </section>
+
+    }
+
+  </main>
+
+</div>

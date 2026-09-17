@@ -1,0 +1,156 @@
+<div class="login-page">
+
+  <main class="login-container">
+
+    <header class="top-bar">
+      <span class="back-button">‹</span>
+
+      <span class="header-title">
+        Iniciar sesión
+      </span>
+
+      <span class="role-badge">
+        VISITANTE
+      </span>
+    </header>
+
+
+    <section class="brand-section">
+
+      <div class="logo">
+        LINO
+      </div>
+
+      <h1>
+        Tu tienda, a tu ritmo
+      </h1>
+
+      <p>
+        Ingresa tus datos para continuar
+      </p>
+
+    </section>
+@if (vm.logoutSuccess()) {
+
+  <div class="logout-success">
+
+    <strong>LISTO</strong>
+
+    <span>
+      Sesión cerrada de forma segura
+    </span>
+
+  </div>
+
+}
+
+    <form
+      class="login-form"
+      (submit)="vm.login(); $event.preventDefault()"
+    >
+
+      <div class="input-group">
+
+        <label for="username">
+          USUARIO
+        </label>
+
+        <input
+          id="username"
+          type="text"
+          autocomplete="username"
+          [value]="vm.username()"
+          [class.input-error]="vm.hasInvalidCredentials()"
+          (input)="vm.setUsername($any($event.target).value)"
+        />
+
+        @if (vm.hasInvalidCredentials()) {
+          <span class="field-error">
+            Revisa este campo
+          </span>
+        }
+
+      </div>
+
+
+      <div class="input-group">
+
+        <label for="password">
+          CONTRASEÑA
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="••••••••"
+          [value]="vm.password()"
+          [class.input-error]="vm.hasInvalidCredentials()"
+          (input)="vm.setPassword($any($event.target).value)"
+        />
+
+        @if (vm.hasInvalidCredentials()) {
+          <span class="field-error">
+            Revisa este campo
+          </span>
+        }
+
+      </div>
+
+
+      @if (vm.hasInvalidCredentials()) {
+
+        <div class="notice notice-error">
+
+          <strong>AVISO</strong>
+
+          <span>
+            Usuario o contraseña inválidos
+          </span>
+
+        </div>
+
+      }
+
+
+      @if (vm.isOffline()) {
+
+        <div class="notice notice-error">
+
+          <strong>AVISO</strong>
+
+          <span>
+            Sin conexión. Verifica tu red.
+          </span>
+
+        </div>
+
+      }
+
+
+      <button
+        class="login-button"
+        type="submit"
+        [disabled]="vm.isLoading()"
+      >
+
+        @if (vm.isLoading()) {
+          Iniciando...
+        } @else {
+          Iniciar sesión
+        }
+
+      </button>
+
+
+      <div class="secure-message">
+        <span class="lock">●</span>
+
+        Conexión segura
+      </div>
+
+    </form>
+
+  </main>
+
+</div>

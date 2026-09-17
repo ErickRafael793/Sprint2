@@ -1,0 +1,136 @@
+@if (!vm.loading()) {
+
+  <nav class="bottom-navigation">
+
+    <a
+      class="nav-item"
+      routerLink="/catalog"
+      routerLinkActive="active"
+    >
+
+      <span class="nav-icon">
+        ⌂
+      </span>
+
+      <span>
+        Inicio
+      </span>
+
+    </a>
+
+
+    @if (vm.isClient()) {
+
+      <a
+        class="nav-item"
+        routerLink="/cart"
+        routerLinkActive="active"
+      >
+
+        <span class="nav-icon">
+          🛒
+        </span>
+
+        <span>
+          Carrito
+        </span>
+
+      </a>
+
+    }
+
+
+    @if (vm.isAdmin()) {
+
+      <a
+  class="nav-item"
+  routerLink="/inventory"
+  routerLinkActive="active"
+>
+
+  <span class="nav-icon">
+    📦
+  </span>
+
+  <span>
+    Inventario
+  </span>
+
+</a>
+
+      <a
+        class="nav-item"
+        routerLink="/admin/products/new"
+        routerLinkActive="active"
+      >
+
+        <span class="nav-icon add-icon">
+          +
+        </span>
+
+        <span>
+          Agregar
+        </span>
+
+      </a>
+
+    }
+
+
+    @if (vm.canAudit()) {
+
+      <a
+        class="nav-item"
+        routerLink="/audit/users"
+        routerLinkActive="active"
+      >
+
+        <span class="nav-icon">
+          ♙♙
+        </span>
+
+        <span>
+          Usuarios
+        </span>
+
+      </a>
+
+
+      <a
+        class="nav-item"
+        routerLink="/audit/carts"
+        routerLinkActive="active"
+      >
+
+        <span class="nav-icon">
+          ▤
+        </span>
+
+        <span>
+          Auditoría
+        </span>
+
+      </a>
+
+    }
+
+
+    <a
+      class="nav-item"
+      routerLink="/profile"
+      routerLinkActive="active"
+    >
+
+      <span class="nav-icon">
+        ♙
+      </span>
+
+      <span>
+        Perfil
+      </span>
+
+    </a>
+
+  </nav>
+
+}

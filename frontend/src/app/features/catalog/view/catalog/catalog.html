@@ -1,0 +1,407 @@
+<div class="catalog-page">
+
+  <main class="catalog-container">
+
+
+    <!-- =====================
+         HEADER
+    ====================== -->
+
+    <header class="catalog-header">
+
+      <div>
+
+        <span class="section-label">
+          CATÁLOGO
+        </span>
+
+        <h1>
+          Encuentra algo para ti
+        </h1>
+
+      </div>
+
+
+     <span class="role-badge">
+  {{ vm.role() }}
+</span>
+    </header>
+
+
+@if (vm.deleteSuccess()) {
+
+  <div class="delete-success">
+
+    <strong>
+      LISTO
+    </strong>
+
+    <span>
+      Producto eliminado correctamente
+    </span>
+
+  </div>
+
+}
+@if (vm.auditDenied()) {
+
+  <div class="audit-denied">
+
+    <strong>
+      SIN ACCESO
+    </strong>
+
+    <span>
+      Sin acceso a Auditoría
+    </span>
+
+  </div>
+
+}
+    <!-- =====================
+         BUSCADOR
+    ====================== -->
+
+    <div class="search-box">
+
+      <span class="search-icon">
+        ⌕
+      </span>
+
+      <span>
+        Buscar productos
+      </span>
+
+    </div>
+
+
+
+    <!-- =====================
+         CATEGORÍAS - US04
+    ====================== -->
+
+    <section class="category-section">
+
+      <div class="category-scroll">
+
+        @for (
+          category of vm.categories();
+          track category
+        ) {
+
+          <button
+            type="button"
+            class="category-button"
+            [class.active]="
+              vm.selectedCategory() === category
+            "
+            [disabled]="vm.isFiltering()"
+            (click)="vm.selectCategory(category)"
+          >
+
+            {{ category }}
+
+          </button>
+
+        }
+
+      </div>
+
+
+      @if (vm.hasActiveFilter()) {
+
+        <div class="active-filter">
+
+          <span class="active-filter-label">
+            Ver todos
+          </span>
+
+          <span class="filter-name">
+            {{ vm.selectedCategory() }}
+          </span>
+
+          <button
+            type="button"
+            class="clear-filter"
+            aria-label="Quitar filtro"
+            (click)="vm.clearFilter()"
+          >
+            ×
+          </button>
+
+        </div>
+
+      }
+
+    </section>
+
+
+
+    <!-- =====================
+         CARGA INICIAL
+    ====================== -->
+
+    @if (vm.isLoading()) {
+
+      <section
+        class="product-grid"
+        aria-label="Cargando productos"
+      >
+
+        @for (
+          item of [1, 2, 3, 4];
+          track item
+        ) {
+
+          <article
+            class="product-card skeleton-card"
+          >
+
+            <div
+              class="skeleton image-skeleton"
+            ></div>
+
+            <div class="product-info">
+
+              <div
+                class="skeleton text-skeleton short"
+              ></div>
+
+              <div
+                class="skeleton text-skeleton"
+              ></div>
+
+              <div
+                class="skeleton price-skeleton"
+              ></div>
+
+            </div>
+
+          </article>
+
+        }
+
+      </section>
+
+    }
+
+
+
+    <!-- =====================
+         ERROR
+    ====================== -->
+
+    @else if (vm.hasError()) {
+
+      <section class="error-state">
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <h2>
+          No pudimos cargar
+        </h2>
+
+        <p>
+          Revisa tu conexión e
+          intenta nuevamente.
+        </p>
+
+        <button
+          type="button"
+          class="retry-button"
+          (click)="vm.retry()"
+        >
+
+          Reintentar
+
+        </button>
+
+      </section>
+
+    }
+
+
+
+    <!-- =====================
+         CAMBIO DE CATEGORÍA
+    ====================== -->
+
+    @else if (vm.isFiltering()) {
+
+      <div class="filter-loading">
+
+        <div class="small-loader"></div>
+
+        <span>
+          Cargando categoría...
+        </span>
+
+      </div>
+
+
+      <section class="product-grid">
+
+        @for (
+          item of [1, 2, 3, 4];
+          track item
+        ) {
+
+          <article
+            class="product-card skeleton-card"
+          >
+
+            <div
+              class="skeleton image-skeleton"
+            ></div>
+
+            <div class="product-info">
+
+              <div
+                class="skeleton text-skeleton short"
+              ></div>
+
+              <div
+                class="skeleton text-skeleton"
+              ></div>
+
+              <div
+                class="skeleton price-skeleton"
+              ></div>
+
+            </div>
+
+          </article>
+
+        }
+
+      </section>
+
+    }
+
+
+
+    <!-- =====================
+         PRODUCTOS FILTRADOS
+    ====================== -->
+
+    @else if (vm.hasProducts()) {
+
+      <section class="product-grid">
+
+        @for (
+          product of vm.filteredProducts();
+          track product.id
+        ) {
+
+          <article
+  class="product-card"
+  [routerLink]="[
+    '/products',
+    product.id
+  ]"
+>
+
+            <div class="product-image-container">
+
+              <img
+                class="product-image"
+                [src]="product.image"
+                [alt]="product.title"
+              />
+
+
+             <button
+  class="favorite-button"
+  type="button"
+  aria-label="Agregar a favoritos"
+  (click)="$event.stopPropagation()"
+>
+  ♡
+</button>
+
+            </div>
+
+
+            <div class="product-info">
+
+              <span class="product-category">
+
+                {{ product.category }}
+
+              </span>
+
+
+              <h2>
+                {{ product.title }}
+              </h2>
+
+
+              <strong class="price">
+
+                {{
+                  product.price
+                    | currency:
+                      'USD':
+                      'symbol':
+                      '1.2-2'
+                }}
+
+              </strong>
+
+            </div>
+
+          </article>
+
+        }
+
+      </section>
+
+    }
+
+
+
+    <!-- =====================
+         SIN RESULTADOS
+    ====================== -->
+
+    @else {
+
+      <section class="empty-category">
+
+        <div class="empty-icon">
+          ◇
+        </div>
+
+        <h2>
+          No hay productos
+        </h2>
+
+        <p>
+          No encontramos productos
+          en esta categoría.
+        </p>
+
+        <button
+          type="button"
+          (click)="vm.clearFilter()"
+        >
+          Ver todos
+        </button>
+
+      </section>
+
+    }
+
+  </main>
+
+
+
+  <!-- =====================
+       NAVEGACIÓN
+  ====================== -->
+
+ <app-bottom-nav></app-bottom-nav>
+
+</div>

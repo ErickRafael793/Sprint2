@@ -1,0 +1,450 @@
+:host {
+  display: block;
+}
+
+
+.audit-page {
+  min-height: 100vh;
+
+  padding:
+    24px
+    18px
+    105px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8efe5 0%,
+      #faf8f4 45%,
+      #edf3f5 100%
+    );
+}
+
+
+.audit-container {
+  width: 100%;
+  max-width: 560px;
+
+  min-height:
+    calc(100vh - 48px);
+
+  margin: 0 auto;
+
+  padding: 22px;
+
+  border-radius: 28px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 15px 45px
+    rgba(54, 54, 54, 0.08);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.top-bar {
+  display: grid;
+
+  grid-template-columns:
+    42px
+    1fr
+    auto;
+
+  align-items: center;
+
+  min-height: 45px;
+}
+
+
+.back-button {
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #30343b;
+
+  font-size: 31px;
+
+  cursor: pointer;
+}
+
+
+.header-title {
+  font-size: 16px;
+
+  font-weight: 700;
+}
+
+
+.role-badge {
+  padding:
+    7px
+    11px;
+
+  border-radius: 999px;
+
+  background: #dde9ee;
+
+  color: #53656d;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.07em;
+}
+
+
+/* =========================
+   TITULO
+========================= */
+
+.audit-heading {
+  margin:
+    42px
+    0
+    26px;
+}
+
+
+.section-label {
+  color: #a56f6b;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.11em;
+}
+
+
+.audit-heading h1 {
+  margin:
+    6px
+    0;
+
+  color: #30343b;
+
+  font-size: 28px;
+}
+
+
+.audit-heading p {
+  margin: 0;
+
+  color: #87898d;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   CARRITOS
+========================= */
+
+.carts-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 13px;
+}
+
+
+.cart-card {
+  overflow: hidden;
+
+  border:
+    1px solid
+    #ece9e4;
+
+  border-radius: 17px;
+
+  background: #ffffff;
+}
+
+
+.cart-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  width: 100%;
+
+  padding:
+    17px
+    16px;
+
+  border: none;
+
+  background: transparent;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+.cart-header:hover {
+  background: #faf8f5;
+}
+
+
+.cart-main {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+.cart-number {
+  color: #30343b;
+
+  font-size: 15px;
+}
+
+
+.cart-date {
+  color: #9a9c9f;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+}
+
+
+.cart-user {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #73777b;
+
+  font-size: 12px;
+}
+
+
+.arrow {
+  color: #a56f6b;
+
+  font-size: 11px;
+}
+
+
+/* =========================
+   DETALLE EXPANDIDO
+========================= */
+
+.cart-details {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding:
+    0
+    16px
+    16px;
+
+  border-top:
+    1px solid
+    #f0ede8;
+
+  background: #faf8f5;
+}
+
+
+.audit-item {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding:
+    12px
+    0;
+
+  border-bottom:
+    1px solid
+    #ebe7e0;
+
+  color: #5f6266;
+
+  font-size: 13px;
+}
+
+
+.audit-item:last-child {
+  border-bottom: none;
+}
+
+
+.audit-item strong {
+  color: #a56f6b;
+
+  font-size: 12px;
+}
+
+
+.no-details {
+  margin:
+    15px
+    0
+    0;
+
+  color: #96989b;
+
+  font-size: 12px;
+
+  font-style: italic;
+}
+
+
+/* =========================
+   LOADING / ERROR
+========================= */
+
+.loading-state,
+.error-state {
+  display: flex;
+
+  min-height: 600px;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+.loader {
+  width: 40px;
+  height: 40px;
+
+  margin-bottom: 17px;
+
+  border:
+    4px solid
+    #eeeeee;
+
+  border-top-color:
+    #d98f89;
+
+  border-radius: 50%;
+
+  animation:
+    spin
+    0.8s linear infinite;
+}
+
+
+.error-icon {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 68px;
+  height: 68px;
+
+  margin-bottom: 20px;
+
+  border-radius: 22px;
+
+  background: #f3e8d2;
+
+  color: #9d815b;
+
+  font-size: 28px;
+
+  font-weight: 800;
+}
+
+
+.error-state h1 {
+  margin: 0;
+
+  color: #30343b;
+}
+
+
+.error-state p {
+  color: #85878b;
+}
+
+
+.retry-button {
+  height: 46px;
+
+  padding:
+    0
+    20px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background: #d98f89;
+
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+@keyframes spin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .audit-page {
+    padding:
+      0
+      0
+      90px;
+  }
+
+
+  .audit-container {
+    min-height: 100vh;
+
+    border-radius: 0;
+
+    box-shadow: none;
+  }
+
+}

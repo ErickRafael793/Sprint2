@@ -1,0 +1,286 @@
+<div class="users-page">
+
+  <main class="users-container">
+
+
+    <!-- =====================
+         CARGANDO
+    ====================== -->
+
+    @if (vm.isLoading()) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+        <span class="header-title">
+          Usuarios
+        </span>
+
+        <span class="role-badge">
+         {{ vm.session()?.role ?? 'CONTROL' }}
+        </span>
+
+      </header>
+
+
+      <section class="loading-state">
+
+        <div class="loader"></div>
+
+        <p>
+          Cargando usuarios...
+        </p>
+
+      </section>
+
+    }
+
+
+    <!-- =====================
+         ERROR
+    ====================== -->
+
+    @else if (vm.hasError()) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+        <span class="header-title">
+          Usuarios
+        </span>
+
+        <span class="role-badge">
+         {{ vm.session()?.role ?? 'CONTROL' }}
+        </span>
+
+      </header>
+
+
+      <section class="error-state">
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <h1>
+          Sin conexión
+        </h1>
+
+        <p>
+          No pudimos descargar
+          los usuarios.
+        </p>
+
+        <button
+          type="button"
+          class="retry-button"
+          (click)="vm.retry()"
+        >
+          Reintentar
+        </button>
+
+      </section>
+
+    }
+
+
+    <!-- =====================
+         SIN ACCESO
+    ====================== -->
+
+    @else if (!vm.canAccess()) {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+        <span class="header-title">
+          Usuarios
+        </span>
+
+        <span class="role-badge">
+          {{ vm.session()?.role ?? 'CLIENTE' }}
+        </span>
+
+      </header>
+
+
+      <section class="error-state">
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <h1>
+          Sin acceso
+        </h1>
+
+        <p>
+          Esta sección está disponible
+          únicamente para administradores
+          y auditores.
+        </p>
+
+        <button
+          type="button"
+          class="retry-button"
+          (click)="vm.goToCatalog()"
+        >
+          Volver al catálogo
+        </button>
+
+      </section>
+
+    }
+
+
+    <!-- =====================
+         DIRECTORIO
+    ====================== -->
+
+    @else {
+
+      <header class="top-bar">
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="vm.goToCatalog()"
+        >
+          ‹
+        </button>
+
+
+        <span class="header-title">
+          Usuarios
+        </span>
+
+
+        <span class="role-badge">
+         {{ vm.session()?.role ?? 'CONTROL' }}
+        </span>
+
+      </header>
+
+
+      <section class="directory-heading">
+
+        <span class="section-label">
+          AUDITORÍA
+        </span>
+
+        <h1>
+          Directorio
+        </h1>
+
+        <p>
+          Usuarios registrados
+          en el sistema.
+        </p>
+
+      </section>
+
+
+      <section class="users-list">
+
+        @for (
+          user of vm.users();
+          track user.id
+        ) {
+
+          <article class="user-card">
+
+
+            <!-- AVATAR -->
+
+            <div class="avatar">
+
+              {{
+                user.name
+                  .split(' ')[0]
+                  .charAt(0)
+              }}
+
+              {{
+                user.name
+                  .split(' ')[1]
+                  ?.charAt(0)
+              }}
+
+            </div>
+
+
+            <!-- INFORMACIÓN -->
+
+            <div class="user-info">
+
+              <h2>
+                {{ user.name }}
+              </h2>
+
+
+              <span class="username">
+                @{{ user.username }}
+              </span>
+
+
+              <div class="contact-info">
+
+                <span>
+                  {{ user.email }}
+                </span>
+
+                <span class="separator">
+                  •
+                </span>
+
+                <span>
+                  {{ user.phone }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- SOLO LECTURA -->
+
+            <span class="read-only">
+              VER
+            </span>
+
+          </article>
+
+        }
+
+      </section>
+
+    }
+
+  </main>
+
+
+  <app-bottom-nav>
+  </app-bottom-nav>
+
+</div>
