@@ -70,9 +70,18 @@ export class UsersViewModel {
   );
 
 
-  readonly canAccess = computed(
-    () =>
-      this.session()?.role === 'AUDITOR'
+  readonly canAccess =
+  computed(
+    () => {
+
+      const role =
+        this.session()?.role;
+
+      return (
+        role === 'ADMIN' ||
+        role === 'AUDITOR'
+      );
+    }
   );
 
 
@@ -104,8 +113,9 @@ export class UsersViewModel {
        * el directorio.
        */
       if (
-        session?.role !== 'AUDITOR'
-      ) {
+          session?.role !== 'ADMIN' &&
+          session?.role !== 'AUDITOR'
+         ) {
 
         this.users.set(
           []

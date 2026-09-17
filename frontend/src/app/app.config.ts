@@ -60,20 +60,16 @@ import {
 import {
   UserRepository
 } from './core/repositories/user.repository';
-
 import {
-  MockUserRepository
-} from './core/mocks/mock-user.repository';
-
-
+  FakeStoreUserRepository
+} from './core/repositories/fake-store-user.repository';
 import {
   AuditCartRepository
 } from './core/repositories/audit-cart.repository';
 
 import {
-  MockAuditCartRepository
-} from './core/mocks/mock-audit-cart.repository';
-
+  FakeStoreAuditCartRepository
+} from './core/repositories/fake-store-audit-cart.repository';
 
 export const appConfig: ApplicationConfig = {
 
@@ -112,15 +108,15 @@ export const appConfig: ApplicationConfig = {
 
 
     {
-      provide: UserRepository,
-      useClass: MockUserRepository
+       provide: UserRepository,
+       useClass: FakeStoreUserRepository
     },
 
 
     {
-      provide: AuditCartRepository,
-      useClass: MockAuditCartRepository
-    }
+  provide: AuditCartRepository,
+  useClass: FakeStoreAuditCartRepository
+}
 
   ]
 
